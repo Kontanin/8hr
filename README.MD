@@ -9,7 +9,7 @@
 
 #### Connect To DB
 
-- [] get connection string
+- [X] get connection string
 - [] setup .env with MONGO_URL variable and assign the value
 - [] import 'dotenv' and setup package
 - [] import connect() and invoke in the starter
