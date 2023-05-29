@@ -17,11 +17,9 @@ const register =async(req,res)=>{
     // if that frist account for database it will be admin
     console.log(isFirstAccount,"test")
     const role=isFirstAccount?'admin':'user';
-
-
     const user =await User.create({email,name,password,role});
     const tokenUser ={name:user.name,userId:user._id,role:user.role}
-    console.log(tokenUser,"tokenuser")
+    attachCookiesToResponse({res,user:tokenUser})
     // ย้ายไป
     // const token =jwt.sign(tokenUser,'jwtSecet',{expiresIn:'1d'})
 
