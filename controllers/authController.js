@@ -22,13 +22,27 @@ const register =async(req,res)=>{
     attachCookiesToResponse({res,user:tokenUser})
     // ย้ายไป
     // const token =jwt.sign(tokenUser,'jwtSecet',{expiresIn:'1d'})
-
+    
     
 
 }
 
 const login =async(req,res)=>{
-    res.send('login user')
+    const {email,password}=req.body
+    if(!email||!password){
+        throw new CustomAPIError.BadRequestError('Please provide email and password')
+    }
+    const user =await User.findOne({email})
+    if(!user){
+        throw new CustomAPIError.UnauthenticatedError('Invalid Credentials');
+    }
+    const isPasswordCorrect = await user.completePassword(password);
+    if(!isPasswordCorrect){
+        throw new CustomAPIError.UnauthenticatedError('Invalid Credentials');
+    }
+    const tokenUser ={name:user.name,userId:user._id,role:user.role}
+    attachCookiesToResponse({res,user:tokenUser})
+    res.status(StatusCodes.CREATED).json({user:tokenUser})
 }
 
 const logout =async (req,res)=>{
