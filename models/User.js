@@ -42,7 +42,7 @@ const UserSchema = new mongoose.Schema({
   })
 
 
-  UserSchema.method.comparePassword=async function(canditatePassword){
+  UserSchema.methods.comparePassword=async function(canditatePassword){
     const isMatch =await bcrypt.compare(canditatePassword,this.password);
     return isMatch
 

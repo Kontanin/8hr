@@ -35,8 +35,9 @@ const login =async(req,res)=>{
     const user =await User.findOne({email})
     if(!user){
         throw new CustomAPIError.UnauthenticatedError('Invalid Credentials');
-    }
-    const isPasswordCorrect = await user.completePassword(password);
+    } 
+    const isPasswordCorrect = await user.comparePassword(password);
+    
     if(!isPasswordCorrect){
         throw new CustomAPIError.UnauthenticatedError('Invalid Credentials');
     }
@@ -46,7 +47,11 @@ const login =async(req,res)=>{
 }
 
 const logout =async (req,res)=>{
-    res.send('log out user')
+    res.cookie('token','logout',{
+        httpOnly:true,
+        expires:new Date(Date.now()+5*1000),
+    })
+    res.status(StatusCodes.OK).json({msg:'user log out '})
 }
 
 module.exports={
