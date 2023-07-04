@@ -34,7 +34,8 @@ const UserSchema = new mongoose.Schema({
 
 
   UserSchema.pre('save',async function(){
-    console.log("pass this ")
+    console.log(this.modifiedPath())
+    console.log(this.isModified('name'))
     const salt =await bcrypt.genSalt(10);
     this.password=await bcrypt.hash(this.password,salt);
     

@@ -26,7 +26,7 @@ const attachCookiesToResponse=({res,user})=>{
       secure:process.env.NODE_ENV==='production',
       'signed':true,
   })
-  res.status(201).json({user})
+  // res.status(201).json({user})
 }
 
 
