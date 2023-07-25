@@ -69,6 +69,8 @@ const uploadImage=async(req,res)=>{
     res.status(StatusCodes.OK).json({image:`/uploads/${productImage.name}`})
 }
 
+
+
 module.exports={
     createProduct,
     getAllProducts,
